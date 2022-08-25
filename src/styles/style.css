@@ -1,0 +1,158 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.register-btn{
+  padding-top: 100px;
+width: 398px !important;
+background-color: #FF7F00 !important;
+margin-top: 20px !important;
+height: 52px;
+}
+.forgot-btn{
+  padding-top: 100px;
+width: 398px !important;
+background-color: #FF7F00 !important;
+margin-top: 20px !important;
+height: 52px;
+margin-top:80px !important;
+
+}
+.reset-btn{
+  padding-top: 100px;
+width: 398px !important;
+background-color: #FF7F00 !important;
+margin-top: 20px !important;
+height: 52px;
+margin-top: 30px !important;
+
+}
+.footertitle{
+  position: fixed;
+  bottom: 0;
+  right: 67px;
+  width: 20%;
+  color: #9494AE;
+  padding: 20px;
+}
+.forgotfootertitle{
+  position: fixed;
+  bottom: 0;
+  color: #9494AE;
+  padding: 20px;
+}
+.forgotreset{
+  position: absolute;
+  left: 37.85%;
+  right: 42.31%;
+  bottom: 60.11%;
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #FF7F00;
+}
+.heading-content{
+font-family: 'Poppins' !important;
+font-style: normal !important;
+font-weight: 600 !important;
+font-size: 32px !important;
+line-height: 40px !important;
+}
+.subheading-content{
+color: #8F9BB3 !important;
+font-family: 'Poppins' !important;
+font-style: normal !important;
+font-weight: 400 !important;
+font-size: 20px !important;
+line-height: 28px !important;
+margin-bottom: 100px !important;
+}
+.forgotsubheading-content{
+  color: #8F9BB3 !important;
+  font-family: 'Poppins' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 20px !important;
+  line-height: 28px !important;
+  margin-bottom: 100px !important;
+  }
+.userimg{
+  position: absolute;
+  width: 102px;
+  height: 102px;
+  /* left: 614px; */
+  top: 244px;
+}
+.uploadbtn{
+  position: absolute;
+  right: 210px;
+  top: 65px;
+  text-transform: capitalize !important;
+  color: #242F3A !important;
+  border: 2px solid #333333 !important;
+  filter: drop-shadow(0px 4px 16px rgba(196, 150, 237, 0.2)) !important;
+  border-radius: 4px !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  width: 125.14px !important;
+
+
+}
+.regtextfield{
+  width: 400px !important;
+  padding-top: 5px !important;
+  border: none;
+  background: #F9F9F9;
+  border-radius: 4px;
+  
+}
+.regfooter{
+  position: absolute;
+    width: 366px;
+    color: #9494AE;
+    /* font-family: 'Poppins'; */
+    font-style: normal;
+    font-weight: 400;
+}
+.lblborder{
+  border: 0 !important;
+}
+.regmaincontent{
+    padding: 80px !important;
+    left: 3.61% !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 32px !important;
+    line-height: 48px !important;
+    margin-top: 32px !important;
+  }
+  /* .css-1umgy1k-MuiFormControl-root-MuiTextField-root'{
+    border: '1px solid yellow',
+    // borderColor: 'yellow', // - Set the Input border when parent has :hover
+} */
+.MuiFormControl-root-MuiTextField-root{
+  border-color: red !important;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: red !important;
+}
+.forgotfield{
+  padding-top: 70px;
+  padding-left: 16px;
+}
+.text-danger{
+  color: red;
+}
