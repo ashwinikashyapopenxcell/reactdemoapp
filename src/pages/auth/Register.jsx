@@ -23,6 +23,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { SaveRegisterData } from "../../Redux/action/action";
+import { useSelector } from "react-redux";
 
 export default function Register() {
   const [value, setValue] = React.useState(null);
@@ -58,40 +61,62 @@ export default function Register() {
     }
   }
 
-  const validationSchema = Yup.object().shape({
-    first_name: Yup.string().required("First name is required"),
-    last_name: Yup.string().required("Last name is required"),
-    // username: Yup.string()
-    //   .required("Username is required")
-    //   .min(6, "Username must be at least 6 characters")
-    //   .max(20, "Username must not exceed 20 characters"),
-    email: Yup.string().required("Email is required").email("Email is invalid"),
-    phone_number: Yup.string().required("Phone is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters")
-      .max(40, "Password must not exceed 40 characters"),
-    confirmPassword: Yup.string()
-      .required("Confirm Password is required")
-      .oneOf([Yup.ref("password"), null], "Confirm Password does not match"),
-    // acceptTerms: Yup.bool().oneOf([true], "Accept Terms is required"),
-  });
-
   const formik = useFormik({
     initialValues: {
-      fullname: "",
-      username: "",
+      first_name: "",
+      last_name: "",
       email: "",
+      phone_number: "",
       password: "",
       confirmPassword: "",
     },
-    validationSchema,
-    // validateOnChange: false,
-    // validateOnBlur: false,
-    onSubmit: (data) => {
-      console.log(JSON.stringify(data, null, 2));
+
+    validationSchema: Yup.object().shape({
+      first_name: Yup.string()
+        .required("First name is required")
+        .min(2, "atleast two character required"),
+      last_name: Yup.string()
+        .required("Last name is required")
+        .min(2, "atleast two character required"),
+      email: Yup.string()
+        .required("Email is required")
+        .email("Email is invalid"),
+      phone_number: Yup.string()
+        .required("This field is Required")
+        .matches(
+          /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+          "Phone number is not valid"
+        ),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password must be at least 6 characters")
+        .max(40, "Password must not exceed 40 characters"),
+      confirmPassword: Yup.string()
+        .required("Confirm Password is required")
+        .oneOf([Yup.ref("password"), null], "Confirm Password does not match"),
+      // acceptTerms: Yup.bool().oneOf([true], "Accept Terms is required"),
+    }),
+    onSubmit: (values) => {
+      console.log(JSON.stringify(values, null, 2));
     },
   });
+
+  const dispatch = useDispatch();
+  const onRegisterSubmit = () => {
+    console.log("Register btn clicked!");
+    dispatch(
+      SaveRegisterData({
+        first_name: formik.values.first_name,
+        last_name: formik.values.last_name,
+        email: formik.values.email,
+        phone_number: formik.values.phone_number,
+        password: formik.values.password,
+        confirmPassword: formik.values.confirmPassword,
+        // dob: ( (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() )
+      })
+    );
+  };
+  const registerUser = useSelector((state) => state.users);
 
   return (
     <div>
@@ -159,13 +184,12 @@ export default function Register() {
                     placeholder="Enter your First Name"
                     className="regtextfield"
                     name="first_name"
-                    onChange={formik.handleChange}
                     value={formik.values.first_name}
-                    component="input"
+                    onChange={formik.handleChange}
                   />
-                  <div className="text-danger">
-                    {formik.errors.first_name ? formik.errors.first_name : null}
-                  </div>
+                  {formik.errors.first_name && formik.touched.first_name && (
+                    <p className="text-danger">{formik.errors.first_name}</p>
+                  )}
                 </Grid>
 
                 <Grid md={6} pt={2}>
@@ -174,13 +198,12 @@ export default function Register() {
                     placeholder="Enter your Last Name"
                     className="regtextfield"
                     name="last_name"
-                    onChange={formik.handleChange}
                     value={formik.values.last_name}
-                    component="input"
+                    onChange={formik.handleChange}
                   />
-                  <div className="text-danger">
-                    {formik.errors.last_name ? formik.errors.last_name : null}
-                  </div>
+                  {formik.errors.last_name && formik.touched.last_name && (
+                    <p className="text-danger">{formik.errors.last_name}</p>
+                  )}
                 </Grid>
 
                 <Grid md={6} pt={2}>
@@ -189,13 +212,12 @@ export default function Register() {
                     placeholder="Enter your email"
                     className="regtextfield"
                     name="email"
-                    onChange={formik.handleChange}
                     value={formik.values.email}
-                    component="input"
+                    onChange={formik.handleChange}
                   />
-                  <div className="text-danger">
-                    {formik.errors.email ? formik.errors.email : null}
-                  </div>
+                  {formik.errors.email && formik.touched.email && (
+                    <p className="text-danger">{formik.errors.email}</p>
+                  )}
                 </Grid>
 
                 <Grid md={6} pt={2}>
@@ -204,26 +226,26 @@ export default function Register() {
                     placeholder="Enter your phone number"
                     className="regtextfield"
                     name="phone_number"
-                    onChange={formik.handleChange}
                     value={formik.values.phone_number}
-                    component="input"
+                    onChange={formik.handleChange}
                   />
-                  <div className="text-danger">
-                    {formik.errors.phone_number
-                      ? formik.errors.phone_number
-                      : null}
-                  </div>
+                  {formik.errors.phone_number &&
+                    formik.touched.phone_number && (
+                      <p className="text-danger">
+                        {formik.errors.phone_number}
+                      </p>
+                    )}
                 </Grid>
                 <Grid md={6} pt={2}>
                   <Textfield
                     name="password"
                     lblname={"Password*"}
-                    value={formik.values.password}
                     placeholder="Enter your Password"
                     type={passwordvalues.showPassword ? "text" : "password"}
-                    onChange={handleChange("password")}
+                    // onChange={handleChange("password")}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
                     className="regtextfield"
-                    component="input"
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">
@@ -243,9 +265,9 @@ export default function Register() {
                       ),
                     }}
                   />
-                  <div className="text-danger">
-                    {formik.errors.password ? formik.errors.password : null}
-                  </div>
+                  {formik.errors.password && formik.touched.password && (
+                    <p className="text-danger">{formik.errors.password}</p>
+                  )}
                 </Grid>
 
                 <Grid md={6} pt={2}>
@@ -254,15 +276,15 @@ export default function Register() {
                     placeholder="Enter your Confirm Password"
                     className="regtextfield"
                     name="confirmPassword"
-                    onChange={formik.handleChange}
                     value={formik.values.confirmPassword}
-                    component="input"
+                    onChange={formik.handleChange}
                   />
-                  <div className="text-danger">
-                    {formik.errors.confirmPassword
-                      ? formik.errors.confirmPassword
-                      : null}
-                  </div>
+                  {formik.errors.confirmPassword &&
+                    formik.touched.confirmPassword && (
+                      <p className="text-danger">
+                        {formik.errors.confirmPassword}
+                      </p>
+                    )}
                 </Grid>
                 <Grid md={6} pt={2}>
                   {/* <Textfield
@@ -337,12 +359,19 @@ export default function Register() {
                     bgColor="#FF7F00"
                     className="register-btn"
                     type="submit"
+                    onClick={onRegisterSubmit}
                   />
                 </Grid>
                 <Grid md={6} pt={4}>
                   <Typography variant="p" className="regfooter">
                     @2020 All Rights Reserved. Engage Pulse Cookie Preferences,
                     Privacy and Tearms
+                    {/* {registerUser.map((register_user) => (
+                      <div key={register_user.fname}>
+                        {" "}
+                        {register_user.fname}{" "}
+                      </div>
+                    ))} */}
                   </Typography>
                 </Grid>
               </Grid>
