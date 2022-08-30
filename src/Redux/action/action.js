@@ -1,5 +1,5 @@
 export function SaveRegisterData(values) {
-  console.log(values);
+  //console.log(values);
   return {
     type: "SaveRegisterData",
     payload: values,

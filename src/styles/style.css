@@ -27,6 +27,14 @@ height: 52px;
 margin-top:80px !important;
 
 }
+.loginfield {
+  box-sizing: border-box;
+  background: #fcfbf7;
+  border-radius: 4px;
+  /* height: 52px; */
+  border-radius: 4px;
+  border: 1px solid #ff7f00;
+}
 .reset-btn{
   padding-top: 100px;
 width: 398px !important;
@@ -119,6 +127,16 @@ margin-bottom: 100px !important;
   border-radius: 4px;
   
 }
+.logintextfield{
+  width: 400px !important;
+  padding-top: 5px !important;
+  border: none;
+  background: #F9F9F9;
+  border-radius: 4px;
+
+  outline: 1px solid transparent;
+  
+}
 .regfooter{
   position: absolute;
     width: 366px;
@@ -139,6 +157,9 @@ margin-bottom: 100px !important;
     line-height: 48px !important;
     margin-top: 32px !important;
   }
+.loginlbl{
+  margin-bottom: -15px !important;
+}
   /* .css-1umgy1k-MuiFormControl-root-MuiTextField-root'{
     border: '1px solid yellow',
     // borderColor: 'yellow', // - Set the Input border when parent has :hover

@@ -20,7 +20,7 @@ export default function ButtonAppBar() {
             aria-label="menu"
             sx={{ mr: 8 }}
           >
-            <img src={Logo} />
+            <img src={Logo} alt="Openxcell" />
           </IconButton>
           <Typography
             variant="h6"

@@ -13,8 +13,7 @@ const reducer = (state = intialState, action) => {
 
     case "Check_data":
       const Logindata = action.payload;
-      // console.log(state.user);
-      // return state;
+      console.log(Logindata);
       if (state.user.length === 0) {
         return state;
       }

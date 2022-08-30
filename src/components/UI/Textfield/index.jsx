@@ -2,17 +2,17 @@ import { TextField, InputLabel } from "@mui/material";
 import React from "react";
 
 export default function index({ placeholder, lblname, ...rest }) {
-  const TEXTFIELDCSS = {
-    // "& .MuiFilledInput-underline:before": {
-    //   borderBottom: "none",
-    // },
-    // "& .MuiFilledInput-underline:after": {
-    //   borderBottom: "none",
-    // },
-    // "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
-    //   borderBottom: "none",
-    // },
-  };
+  // const TEXTFIELDCSS = {
+  //   // "& .MuiFilledInput-underline:before": {
+  //   //   borderBottom: "none",
+  //   // },
+  //   // "& .MuiFilledInput-underline:after": {
+  //   //   borderBottom: "none",
+  //   // },
+  //   // "& .MuiFilledInput-underline:hover:not(.Mui-disabled):before": {
+  //   //   borderBottom: "none",
+  //   // },
+  // };
 
   return (
     <>

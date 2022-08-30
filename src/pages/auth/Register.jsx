@@ -1,5 +1,5 @@
-import React from "react";
-import { InputLabel } from "@mui/material";
+import React, { useState } from "react";
+import { InputLabel, Alert } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -25,10 +25,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { SaveRegisterData } from "../../Redux/action/action";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 export default function Register() {
   const [value, setValue] = React.useState(null);
+  const [messages, setMessages] = useState(false);
   const [termsvalue, setTermsValue] = React.useState("female");
   const [passwordvalues, setPasswordValues] = React.useState({
     amount: "",
@@ -37,10 +38,6 @@ export default function Register() {
     weightRange: "",
     showPassword: false,
   });
-
-  const handleChange = (prop) => (event) => {
-    setPasswordValues({ ...passwordvalues, [prop]: event.target.value });
-  };
 
   const handleClickShowPassword = () => {
     setPasswordValues({
@@ -61,6 +58,46 @@ export default function Register() {
     }
   }
 
+  const validationSchema = Yup.object().shape({
+    first_name: Yup.string()
+      .required("First name is required")
+      .min(2, "atleast two character required"),
+    last_name: Yup.string()
+      .required("Last name is required")
+      .min(2, "atleast two character required"),
+    email: Yup.string().required("Email is required").email("Email is invalid"),
+    phone_number: Yup.string()
+      .required("This field is Required")
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        "Phone number is not valid"
+      ),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters")
+      .max(40, "Password must not exceed 40 characters"),
+    confirmPassword: Yup.string()
+      .required("Confirm Password is required")
+      .oneOf([Yup.ref("password"), null], "Confirm Password does not match"),
+  });
+
+  const onRegisterSubmit = () => {
+    dispatch(
+      SaveRegisterData({
+        first_name: formik.values.first_name,
+        last_name: formik.values.last_name,
+        email: formik.values.email,
+        phone_number: formik.values.phone_number,
+        password: formik.values.password,
+        confirmPassword: formik.values.confirmPassword,
+      })
+    );
+
+    setMessages(true);
+    setTimeout(function () {
+      window.location.href = "http://localhost:3000";
+    }, 5000);
+  };
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -70,53 +107,12 @@ export default function Register() {
       password: "",
       confirmPassword: "",
     },
-
-    validationSchema: Yup.object().shape({
-      first_name: Yup.string()
-        .required("First name is required")
-        .min(2, "atleast two character required"),
-      last_name: Yup.string()
-        .required("Last name is required")
-        .min(2, "atleast two character required"),
-      email: Yup.string()
-        .required("Email is required")
-        .email("Email is invalid"),
-      phone_number: Yup.string()
-        .required("This field is Required")
-        .matches(
-          /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
-          "Phone number is not valid"
-        ),
-      password: Yup.string()
-        .required("Password is required")
-        .min(6, "Password must be at least 6 characters")
-        .max(40, "Password must not exceed 40 characters"),
-      confirmPassword: Yup.string()
-        .required("Confirm Password is required")
-        .oneOf([Yup.ref("password"), null], "Confirm Password does not match"),
-      // acceptTerms: Yup.bool().oneOf([true], "Accept Terms is required"),
-    }),
-    onSubmit: (values) => {
-      console.log(JSON.stringify(values, null, 2));
-    },
+    validationSchema,
+    onSubmit: onRegisterSubmit,
   });
-
   const dispatch = useDispatch();
-  const onRegisterSubmit = () => {
-    console.log("Register btn clicked!");
-    dispatch(
-      SaveRegisterData({
-        first_name: formik.values.first_name,
-        last_name: formik.values.last_name,
-        email: formik.values.email,
-        phone_number: formik.values.phone_number,
-        password: formik.values.password,
-        confirmPassword: formik.values.confirmPassword,
-        // dob: ( (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear() )
-      })
-    );
-  };
-  const registerUser = useSelector((state) => state.users);
+
+  // const registerUser = useSelector((state) => state.users);
 
   return (
     <div>
@@ -124,6 +120,7 @@ export default function Register() {
         <form onSubmit={formik.handleSubmit}>
           <Grid container>
             <Grid
+              item={true}
               md={4}
               style={{
                 background: "#2F80ED",
@@ -154,18 +151,24 @@ export default function Register() {
                 }}
               />
             </Grid>
-            <Grid md={8} style={{ padding: "80px" }}>
+
+            <Grid md={8} style={{ padding: "80px" }} item={true}>
+              {messages && (
+                <Alert severity="success" style={{ marginTop: "-50px" }}>
+                  Success — Your account is register sucessfully!
+                </Alert>
+              )}
               <Typography variant="h4" className="heading-content">
                 Create your account
               </Typography>
               <Typography variant="p" className="subheading-content">
                 We need some details to setup your account
               </Typography>
-              <Grid container spacing={2}>
-                <Grid xs={4}>
-                  <img src={Userimage} className="userimg" />
+              <Grid container spacing={2} item={true}>
+                <Grid xs={4} item={true}>
+                  <img src={Userimage} className="userimg" alt="userimg" />
                 </Grid>
-                <Grid xs={8}>
+                <Grid xs={8} item={true}>
                   <Button variant="outlined" className="uploadbtn">
                     Upload Image
                   </Button>
@@ -178,7 +181,7 @@ export default function Register() {
                 columnSpacing={{ xs: 1, sm: 2, md: 3 }}
                 style={{ paddingTop: "130px" }}
               >
-                <Grid md={6} pt={2} sx={{ border: 0 }}>
+                <Grid md={6} pt={2} sx={{ border: 0 }} item={true}>
                   <Textfield
                     lblname={"First Name*"}
                     placeholder="Enter your First Name"
@@ -192,7 +195,7 @@ export default function Register() {
                   )}
                 </Grid>
 
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <Textfield
                     lblname={"Last Name*"}
                     placeholder="Enter your Last Name"
@@ -206,7 +209,7 @@ export default function Register() {
                   )}
                 </Grid>
 
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <Textfield
                     lblname={"Email*"}
                     placeholder="Enter your email"
@@ -220,7 +223,7 @@ export default function Register() {
                   )}
                 </Grid>
 
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <Textfield
                     lblname={"Phone Number*"}
                     placeholder="Enter your phone number"
@@ -236,7 +239,7 @@ export default function Register() {
                       </p>
                     )}
                 </Grid>
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <Textfield
                     name="password"
                     lblname={"Password*"}
@@ -270,7 +273,7 @@ export default function Register() {
                   )}
                 </Grid>
 
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <Textfield
                     lblname={"Confirm Password*"}
                     placeholder="Enter your Confirm Password"
@@ -286,7 +289,7 @@ export default function Register() {
                       </p>
                     )}
                 </Grid>
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   {/* <Textfield
                   lblname={"DOB"}
                   placeholder="Enter your Confirm Password"
@@ -312,7 +315,7 @@ export default function Register() {
                     />
                   </LocalizationProvider>
                 </Grid>
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <FormLabel
                     id="demo-row-radio-buttons-group-label"
                     style={{ color: "#1D1C1D" }}
@@ -339,7 +342,7 @@ export default function Register() {
                     />
                   </RadioGroup>
                 </Grid>
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}>
                   <RadioGroup
                     aria-label="gender"
                     name="gender1"
@@ -352,17 +355,16 @@ export default function Register() {
                     />
                   </RadioGroup>
                 </Grid>
-                <Grid md={6} pt={2}></Grid>
-                <Grid md={6} pt={2}>
+                <Grid md={6} pt={2} item={true}></Grid>
+                <Grid md={6} pt={2} item={true}>
                   <Darkbutton
                     name="Register"
                     bgColor="#FF7F00"
                     className="register-btn"
                     type="submit"
-                    onClick={onRegisterSubmit}
                   />
                 </Grid>
-                <Grid md={6} pt={4}>
+                <Grid md={6} pt={4} item={true}>
                   <Typography variant="p" className="regfooter">
                     @2020 All Rights Reserved. Engage Pulse Cookie Preferences,
                     Privacy and Tearms

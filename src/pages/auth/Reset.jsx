@@ -3,10 +3,7 @@ import Reglogo from "../../Assets/Images/forgotimg.png";
 import "../../styles/style.css";
 import Darkbutton from "../../components/UI/Darkbutton";
 import Textfield from "../../components/UI/Textfield";
-import { Box,Grid,Typography,Link } from "@mui/material";
-
-
-
+import { Box, Grid, Typography } from "@mui/material";
 
 export default function Reset() {
   return (
@@ -14,6 +11,7 @@ export default function Reset() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid
+            item={true}
             md={4}
             style={{
               background: "#2F80ED",
@@ -42,41 +40,46 @@ export default function Reset() {
               }}
             />
           </Grid>
-          <Grid md={8} style={{ padding: "80px" }}>
-          <Typography variant="h4" className="heading-content">
-          Reset Password
+          <Grid md={8} style={{ padding: "80px" }} item={true}>
+            <Typography variant="h4" className="heading-content">
+              Reset Password
             </Typography>
             <Typography variant="p" className="forgotsubheading-content">
-            Please enter your new password. 
+              Please enter your new password.
             </Typography>
             <Grid container spacing={2}>
-              <Grid md={8} className="forgotfield">
-              <Grid>
-              <Textfield
-                  lblname={"New Password"}
-                  placeholder="Enter New Password"
-                  className="regtextfield"
-                />
-              </Grid>
-              <Grid mt={2}>
-                 <Textfield
-                  lblname={"Confirm Password"}
-                  placeholder="Enter Confirm Password"
-                  className="regtextfield"
-                />
-                 </Grid>
-                 <Darkbutton
+              <Grid md={8} className="forgotfield" item={true}>
+                <Grid item={true}>
+                  <Textfield
+                    lblname={"New Password"}
+                    placeholder="Enter New Password"
+                    className="regtextfield"
+                  />
+                </Grid>
+                <Grid mt={2} item={true}>
+                  <Textfield
+                    lblname={"Confirm Password"}
+                    placeholder="Enter Confirm Password"
+                    className="regtextfield"
+                  />
+                </Grid>
+                <Darkbutton
                   name="Send"
                   bgColor="#FF7F00"
                   className="reset-btn"
                   mb={4}
-                />            
+                />
 
-                <Typography variant="p" className='forgotfootertitle' sx={{ p: 4}} >@2020 All Rights Reserved. Engage Pulse Cookie Preferences, Privacy and Tearms</Typography>
-
+                <Typography
+                  variant="p"
+                  className="forgotfootertitle"
+                  sx={{ p: 4 }}
+                >
+                  @2020 All Rights Reserved. Engage Pulse Cookie Preferences,
+                  Privacy and Tearms
+                </Typography>
               </Grid>
             </Grid>
-           
           </Grid>
         </Grid>
       </Box>
