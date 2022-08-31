@@ -12,3 +12,10 @@ export function AuthenticateData(values) {
     payload: values,
   };
 }
+
+export function Logout(values) {
+  // console.log(values);
+  return {
+    type: "LOGOUT",
+  };
+}
